@@ -1,0 +1,105 @@
+push_message:
+  name: Push message
+  description: Push a message to a single queue.
+  fields:
+    queue:
+      name: Queue
+      description: Name of the target queue.
+      required: true
+      selector:
+        text:
+    message:
+      name: Message
+      description: The message text to display.
+      required: true
+      selector:
+        text:
+    show_seconds:
+      name: Show seconds
+      description: How long to display the message (seconds). Uses the default if omitted.
+      selector:
+        number:
+          min: 1
+          mode: box
+          unit_of_measurement: seconds
+    show_until:
+      name: Show until
+      description: ISO datetime when the message expires (e.g., 2024-03-03T18:30:00).
+      selector:
+        text:
+
+push_message_to_multiple:
+  name: Push message to multiple queues
+  description: Push a message to several queues at once.
+  fields:
+    queues:
+      name: Queues
+      description: List of queue names to send the message to.
+      required: true
+      selector:
+        object:
+    message:
+      name: Message
+      description: The message text to display.
+      required: true
+      selector:
+        text:
+    show_seconds:
+      name: Show seconds
+      description: How long to display the message (seconds). Uses the default if omitted.
+      selector:
+        number:
+          min: 1
+          mode: box
+          unit_of_measurement: seconds
+    show_until:
+      name: Show until
+      description: ISO datetime when the message expires (e.g., 2024-03-03T18:30:00).
+      selector:
+        text:
+
+push_message_to_all:
+  name: Push message to all queues
+  description: Push a message to every configured queue.
+  fields:
+    message:
+      name: Message
+      description: The message text to display.
+      required: true
+      selector:
+        text:
+    show_seconds:
+      name: Show seconds
+      description: How long to display the message (seconds). Uses the default if omitted.
+      selector:
+        number:
+          min: 1
+          mode: box
+          unit_of_measurement: seconds
+    show_until:
+      name: Show until
+      description: ISO datetime when the message expires (e.g., 2024-03-03T18:30:00).
+      selector:
+        text:
+
+clear_queue:
+  name: Clear queue
+  description: Remove all messages from a queue.
+  fields:
+    queue:
+      name: Queue
+      description: Name of the queue to clear.
+      required: true
+      selector:
+        text:
+
+get_queue_status:
+  name: Get queue status
+  description: Log the current state of a queue and fire a message_queue_status event.
+  fields:
+    queue:
+      name: Queue
+      description: Name of the queue to inspect.
+      required: true
+      selector:
+        text:

@@ -1,0 +1,12 @@
+{
+  "domain": "message_queue",
+  "name": "Message Queue",
+  "codeowners": ["@webbson"],
+  "config_flow": true,
+  "documentation": "https://github.com/webbson/homeassistant-hacs-message-queue",
+  "issue_tracker": "https://github.com/webbson/homeassistant-hacs-message-queue/issues",
+  "homeassistant": "2026.1.0",
+  "iot_class": "local_push",
+  "requirements": [],
+  "version": "1.0.0"
+}

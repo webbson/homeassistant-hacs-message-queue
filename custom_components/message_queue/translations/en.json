@@ -1,0 +1,66 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure Message Queue",
+        "description": "Set up the message queue integration with default settings. You can add queues after setup.",
+        "data": {
+          "rotation_interval": "Rotation interval (seconds)",
+          "default_show_seconds": "Default message duration (seconds)"
+        },
+        "data_description": {
+          "rotation_interval": "How often to check for expired messages.",
+          "default_show_seconds": "How long messages display if no duration is specified."
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Message Queue is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "menu_options": {
+          "add_queue": "Add queue",
+          "remove_queue": "Remove queue",
+          "settings": "Settings"
+        }
+      },
+      "add_queue": {
+        "title": "Add Queue",
+        "data": {
+          "queue_name": "Queue name"
+        },
+        "data_description": {
+          "queue_name": "Lowercase letters, numbers, and underscores only (e.g., living_room_screen)."
+        }
+      },
+      "remove_queue": {
+        "title": "Remove Queue",
+        "description": "Select a queue to remove. Messages in the queue will be lost.",
+        "data": {
+          "queue_name": "Queue to remove"
+        }
+      },
+      "settings": {
+        "title": "Settings",
+        "data": {
+          "rotation_interval": "Rotation interval (seconds)",
+          "default_show_seconds": "Default message duration (seconds)"
+        },
+        "data_description": {
+          "rotation_interval": "How often to check for expired messages.",
+          "default_show_seconds": "How long messages display if no duration is specified."
+        }
+      }
+    },
+    "abort": {
+      "no_queues": "No queues configured to remove."
+    },
+    "error": {
+      "invalid_name": "Invalid name. Use lowercase letters, numbers, and underscores. Must start with a letter.",
+      "duplicate_name": "A queue with this name already exists."
+    }
+  }
+}
