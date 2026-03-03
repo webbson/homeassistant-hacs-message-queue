@@ -5,6 +5,7 @@ from pathlib import Path
 
 import voluptuous as vol
 
+from homeassistant.components.http import StaticPathConfig
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.helpers import config_validation as cv
@@ -85,7 +86,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     # Register sidebar panel (once across all entries)
     if not hass.data[DOMAIN].get("_panel_registered"):
-        _register_panel(hass)
+        await _async_register_panel(hass)
         hass.data[DOMAIN]["_panel_registered"] = True
 
     # Forward to sensor platform
@@ -116,14 +117,12 @@ async def _async_update_listener(
     await hass.config_entries.async_reload(entry.entry_id)
 
 
-def _register_panel(hass: HomeAssistant) -> None:
+async def _async_register_panel(hass: HomeAssistant) -> None:
     """Register the sidebar panel for sending messages."""
     frontend_path = Path(__file__).parent / "frontend"
-    hass.http.register_static_path(
-        "/api/message_queue/panel",
-        str(frontend_path),
-        cache_headers=False,
-    )
+    await hass.http.async_register_static_paths([
+        StaticPathConfig("/api/message_queue/panel", str(frontend_path), cache_headers=False),
+    ])
     hass.components.frontend.async_register_built_in_panel(
         component_name="custom",
         sidebar_title="Messages",
