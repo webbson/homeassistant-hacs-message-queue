@@ -17,7 +17,7 @@ A HACS custom integration for Home Assistant that displays rotating messages on 
 
 ### HACS (Recommended)
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Tom+Stevens&repository=https%3A%2F%2Fgithub.com%2Fwebbson%2Fhomeassistant-hacs-message-queue&category=Integration)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=webbson&repository=homeassistant-hacs-message-queue&category=Integration)
 
 Or manually:
 
