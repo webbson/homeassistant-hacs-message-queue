@@ -196,8 +196,8 @@ class QueueManager:
         return datetime.now() + timedelta(seconds=self.default_show_seconds)
 
     async def _async_rotate(self, now: datetime) -> None:
-        """Rotation callback: remove expired messages from all queues."""
-        changed = False
+        """Rotation callback: remove expired messages and rotate queues."""
+        expired_any = False
         current_time = datetime.now()
 
         for queue_name in list(self.queues.keys()):
@@ -205,16 +205,30 @@ class QueueManager:
             if not queue:
                 continue
 
-            current = queue[0]
-            if current_time > current["expires_at"]:
-                removed = queue.popleft()
-                _LOGGER.debug(
-                    "Message expired in '%s': '%s'", queue_name, removed["text"]
-                )
-                async_dispatcher_send(self.hass, SIGNAL_QUEUE_UPDATED, queue_name)
-                changed = True
+            # Remove all expired messages from the queue
+            original_length = len(queue)
+            self.queues[queue_name] = deque(
+                msg for msg in queue if current_time <= msg["expires_at"]
+            )
+            queue = self.queues[queue_name]
+            expired_count = original_length - len(queue)
 
-        if changed:
+            if expired_count:
+                _LOGGER.debug(
+                    "Removed %d expired message(s) from '%s'",
+                    expired_count, queue_name,
+                )
+                expired_any = True
+
+            # Rotate to show the next message
+            if len(queue) > 1:
+                queue.rotate(-1)
+                async_dispatcher_send(self.hass, SIGNAL_QUEUE_UPDATED, queue_name)
+            elif expired_count:
+                # Queue content changed due to expiration, update sensor
+                async_dispatcher_send(self.hass, SIGNAL_QUEUE_UPDATED, queue_name)
+
+        if expired_any:
             await self._async_save_state()
 
     async def _async_load_state(self) -> None:
