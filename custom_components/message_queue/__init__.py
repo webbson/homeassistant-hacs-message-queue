@@ -5,6 +5,7 @@ from pathlib import Path
 
 import voluptuous as vol
 
+from homeassistant.components import panel_custom
 from homeassistant.components.http import StaticPathConfig
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, ServiceCall
@@ -123,17 +124,13 @@ async def _async_register_panel(hass: HomeAssistant) -> None:
     await hass.http.async_register_static_paths([
         StaticPathConfig("/api/message_queue/panel", str(frontend_path), cache_headers=False),
     ])
-    hass.components.frontend.async_register_built_in_panel(
-        component_name="custom",
+    await panel_custom.async_register_panel(
+        hass,
+        webcomponent_name="message-queue-panel",
         sidebar_title="Messages",
         sidebar_icon="mdi:message-text",
         frontend_url_path="message-queue",
-        config={
-            "_panel_custom": {
-                "name": "message-queue-panel",
-                "module_url": "/api/message_queue/panel/message-queue-panel.js",
-            }
-        },
+        module_url="/api/message_queue/panel/message-queue-panel.js",
         require_admin=False,
     )
 
