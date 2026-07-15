@@ -207,8 +207,8 @@ def _register_services(hass: HomeAssistant) -> None:
             _LOGGER.error("Message Queue not initialized")
             return
         await manager.async_remove_message(
-            message_id=call.data["message_id"],
-            queue=call.data.get["queue"],
+            message_id=call.data.get("message_id"),
+            queue=call.data.get("queue"),
         )
 
     hass.services.async_register(
