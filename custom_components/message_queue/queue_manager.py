@@ -81,7 +81,7 @@ class QueueManager:
         # this should be fine.
         if message_id is not None:
             for i in range(len(self.queues[queue])):
-                if self.queues[queue][i]["message_id"] == message_id:
+                if self.queues[queue][i].get("message_id") == message_id:
                     del self.queues[queue][i]
                     _LOGGER.debug(
                         "Removed previous message with message id '%s' from '%s'", message_id, queue
@@ -122,7 +122,7 @@ class QueueManager:
             # this should be fine.
             if message_id is not None:
                 for i in range(len(self.queues[queue])):
-                    if self.queues[queue][i]["message_id"] == message_id:
+                    if self.queues[queue][i].get("message_id") == message_id:
                         del self.queues[queue][i]
                         _LOGGER.debug(
                             "Removed previous message with message id '%s' from '%s'", message_id, queue
@@ -158,7 +158,7 @@ class QueueManager:
             # this should be fine.
             if message_id is not None:
                 for i in range(len(self.queues[queue])):
-                    if self.queues[queue][i]["message_id"] == message_id:
+                    if self.queues[queue][i].get("message_id") == message_id:
                         del self.queues[queue][i]
                         _LOGGER.debug(
                             "Removed previous message with message id '%s' from '%s'", message_id, queue
@@ -182,7 +182,7 @@ class QueueManager:
                 _LOGGER.error("Queue '%s' does not exist", queue)
                 return
             for i in range(len(self.queues[queue])):
-                if self.queues[queue][i]["message_id"] == message_id:
+                if self.queues[queue][i].get("message_id") == message_id:
                     del self.queues[queue][i]
                     _LOGGER.debug(
                         "Removed previous message with message id '%s' from '%s'", message_id, queue
@@ -195,7 +195,7 @@ class QueueManager:
                 # Linear search is probably not great... but unless queue lengths are crazy
                 # this should be fine.            
                 for i in range(len(self.queues[queue_name])):
-                    if self.queues[queue_name][i]["message_id"] == message_id:
+                    if self.queues[queue_name][i].get("message_id") == message_id:
                         del self.queues[queue_name][i]
                         _LOGGER.debug(
                             "Removed previous message with message id '%s' from '%s'", message_id, queue
